@@ -1,6 +1,8 @@
 .App {
   font-family: sans-serif;
+  display: grid;
+  justify-items: center;
 
   --primary-color: #004e5f;
-  --highlight-color: #def7f7;
+  --highlight-color: #efe8e8;
 }

@@ -10,6 +10,7 @@
     "react-scripts": "3.0.1"
   },
   "devDependencies": {
+    "prop-types": "^15.7.2",
     "typescript": "3.8.3"
   },
   "scripts": {

@@ -1,31 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import './styles.css';
 import {fetchChecks} from './api';
 import CheckList from './components/CheckList/CheckList';
 import Button from './components/Button/Button';
+import ErrorCard from './components/ErrorCard/ErrorCard';
 
 export default function App() {
   const [checks, setChecks] = useState([]);
+  const [fetchSuccess, setFetchSuccess] = useState(null);
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
-  useEffect(() => {
-    const getChecks = async () => {
-      const checksFromApi = await fetchChecksFromApi();
-      const sortedChecks = sortChecksByPriority(checksFromApi);
-      const extendedChecks = appendCheckProperties(sortedChecks);
-      setChecks(extendedChecks);
-    };
-
-    void getChecks();
+  const getChecks = useCallback(async () => {
+    await fetchChecks()
+      .then((fetchedChecks) => {
+        const sortedChecks = sortChecksByPriority(fetchedChecks);
+        const extendedChecks = appendCheckProperties(sortedChecks);
+        setChecks(extendedChecks);
+        setFetchSuccess(true);
+      })
+      .catch((error) => setFetchSuccess(error?.success));
   }, []);
+
+  useEffect(() => {
+    void getChecks();
+  }, [getChecks]);
 
   useEffect(() => {
     setSubmitDisabled(!(checks.every(check => check.resolution === true) || checks.some(check => check.resolution === false)));
   }, [checks]);
-
-  const fetchChecksFromApi = () => {
-    return fetchChecks();
-  };
 
   const sortChecksByPriority = checks => {
     return [...checks].sort((a, b) => b.priority - a.priority);
@@ -68,10 +70,17 @@ export default function App() {
 
   return (
     <div className="App">
-      <CheckList checks={checks} clickHandler={clickHandler}/>
-      <section className="submit-container">
-        <Button children={'Submit'} disabled={submitDisabled}/>
-      </section>
+      {fetchSuccess === false && (
+        <ErrorCard error={'An error occurred'} buttonText={'Try again'} clickHandler={getChecks}/>
+      )}
+      {fetchSuccess && (
+        <section>
+          <CheckList checks={checks} clickHandler={clickHandler}/>
+          <section className="submit-container">
+            <Button children={'Submit'} disabled={submitDisabled}/>
+          </section>
+        </section>
+      )}
     </div>
   );
 }

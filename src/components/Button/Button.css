@@ -1,0 +1,50 @@
+.Button, .selected {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 32px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  text-align: center;
+  user-select: none;
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: white;
+
+  position: relative;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deselected {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 32px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  text-align: center;
+  user-select: none;
+  background-color: white;
+
+  position: relative;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+:enabled {
+  border: 2px solid var(--primary-color);
+}
+
+.Button:disabled {
+  background-color: #e6ebf4;
+  color: #bdc0cf;
+  cursor: not-allowed;
+}
+
+.Button:enabled:hover,
+.Button:enabled:focus {
+  filter: brightness(110%);
+}

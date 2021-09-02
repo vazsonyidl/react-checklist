@@ -1,6 +1,13 @@
 .App {
   font-family: sans-serif;
+  width: fit-content;
 
   --primary-color: #004e5f;
-  --highlight-color: #def7f7;
+  --highlight-color: #efe8e8;
+}
+
+.submit-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 16px 0 0;
 }

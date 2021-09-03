@@ -2,22 +2,39 @@ import React from 'react';
 import './CheckListElement.css';
 import Button from '../Button/Button';
 
-const CheckListElement = ({check, clickHandler}) => {
+const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp}) => {
   const onSubmission = resolution => {
+    if (check?.disabled) return;
     clickHandler(check.id, resolution);
   };
 
   const handleKeyDown = event => {
-    if(event.key === '1') onSubmission(true);
-    if(event.key === '2') onSubmission(false);
-  }
+    event.stopPropagation();
+    switch (event?.key) {
+      case '1':
+        onSubmission(true);
+        break;
+      case '2':
+        onSubmission(false);
+        break;
+      case 'ArrowDown':
+        onArrowDown(check.id);
+        break;
+      case 'ArrowUp':
+        onArrowUp(check.id);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div
       className={`container ${check.disabled ? 'disabled' : ''}`}
       aria-disabled={check.disabled}
       onKeyDown={handleKeyDown}
-      tabIndex='0'
+      tabIndex="0"
+      ref={element => setRef(element)}
     >
       {check.description}
       <section>

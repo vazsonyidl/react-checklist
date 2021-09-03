@@ -38,33 +38,44 @@ export default function App() {
   };
 
   const clickHandler = (id, resolution) => {
-    const updatedIndex = checks.findIndex(check => check.id === id);
-    let updatedElements;
-    if (resolution) {
-      updatedElements = [
-        ...checks.filter((check, index) => !(check.id === id || index === updatedIndex + 1)),
-        ...enableNextCheck(updatedIndex),
-        ...setResolution(id, resolution)
-      ];
-    } else {
-      updatedElements = [
-        ...checks.filter((_, index) => index < updatedIndex),
-        ...disableLeftOverChecks(updatedIndex),
-        ...setResolution(id, resolution)
-      ];
-    }
+    const updatedElements = resolution ? handleAcceptClick(id, resolution) : handleDeclineClick(id, resolution);
     setChecks(sortChecksByPriority(updatedElements));
   };
 
-  const enableNextCheck = updatedIndex => {
-    return [...checks].filter((check, index) => updatedIndex + 1 === index).map(check => ({...check, disabled: false}));
+  const handleAcceptClick = (id, resolution) => {
+    return [
+      ...enableAnsweredChecks(id),
+      ...handleUnAnsweredChecks(id),
+      ...setCurrentCheck(id, resolution),
+    ];
   };
 
-  const disableLeftOverChecks = updatedIndex => {
+  const handleDeclineClick = (id, resolution) => {
+    const updatedIndex = checks.findIndex(check => check.id === id);
+    return [
+      ...checks.filter((_, index) => index < updatedIndex),
+      ...disableRestChecks(updatedIndex),
+      ...setCurrentCheck(id, resolution)
+    ];
+  };
+
+  const handleUnAnsweredChecks = (id) => {
+    const unAnswered = [...checks].filter(check => check.resolution === null && check.id !== id);
+    return [...unAnswered.slice(0, 1).map(check => ({...check, disabled: false})), ...unAnswered.slice(1)];
+  };
+
+  const enableAnsweredChecks = (id) => {
+    return [...checks].filter(check => check.resolution !== null && check.id !== id).map(check => ({
+      ...check,
+      disabled: false
+    }));
+  };
+
+  const disableRestChecks = updatedIndex => {
     return [...checks].filter((_, index) => index > updatedIndex).map(check => ({...check, disabled: true}));
   };
 
-  const setResolution = (id, resolution) => {
+  const setCurrentCheck = (id, resolution) => {
     return [...checks].filter(check => check.id === id).map(check => ({...check, resolution}));
   };
 
@@ -73,13 +84,12 @@ export default function App() {
       {fetchSuccess === false && (
         <ErrorCard error={'An error occurred'} buttonText={'Try again'} clickHandler={getChecks}/>
       )}
-      {fetchSuccess && (
-        <section>
+      {fetchSuccess && (<>
           <CheckList checks={checks} clickHandler={clickHandler}/>
           <section className="submit-container">
             <Button children={'Submit'} disabled={submitDisabled}/>
           </section>
-        </section>
+        </>
       )}
     </div>
   );

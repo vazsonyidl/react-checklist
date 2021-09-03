@@ -1,6 +1,8 @@
 import React from 'react';
-import './CheckListElement.css';
+import PropTypes from 'prop-types';
+
 import Button from '../Button/Button';
+import './CheckListElement.css';
 
 const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp}) => {
   const onSubmission = resolution => {
@@ -36,21 +38,33 @@ const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp})
       tabIndex="0"
       ref={element => setRef(element)}
     >
-      {check.description}
-      <section>
+      <span data-testid="check-description">{check.description}</span>
+      <section className="button-container">
         <Button children={'Yes'}
                 onClick={() => onSubmission(true)}
                 disabled={check.disabled}
                 type="button"
-                className={check.resolution === true ? 'selected' : 'deselected'}/>
+                className={check.resolution === true ? 'selected' : 'deselected'}
+                data-testid='check-yes-btn'/>
         <Button children={'No'}
                 onClick={() => onSubmission(false)}
                 disabled={check.disabled}
                 type="button"
-                className={check.resolution === false ? 'selected' : 'deselected'}/>
+                className={check.resolution === false ? 'selected' : 'deselected'}
+                data-testid='check-no-btn'/>
       </section>
     </div>
   );
 };
 
+CheckListElement.propTypes = {
+  check: PropTypes.shape({
+    id: PropTypes.string,
+    priority: PropTypes.number,
+    description: PropTypes.string,
+    resolution: PropTypes.bool,
+    disabled: PropTypes.bool
+  }).isRequired,
+  setRef: PropTypes.func.isRequired
+};
 export default CheckListElement;

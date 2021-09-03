@@ -1,4 +1,5 @@
-.Button, .selected {
+.Button,
+.selected {
   font-weight: 500;
   font-size: 12px;
   line-height: 32px;

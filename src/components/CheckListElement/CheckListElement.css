@@ -11,6 +11,10 @@
     background-color: #e6ebf4;
 }
 
+.button-container {
+    padding: 8px 0 0;
+}
+
 .disabled {
     pointer-events: none;
     background-color: #e6ebf4;

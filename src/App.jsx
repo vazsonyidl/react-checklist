@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import './styles.css';
-import {fetchChecks} from './api';
+import {fetchChecks, submitCheckResults} from './api';
 import CheckList from './components/CheckList/CheckList';
 import Button from './components/Button/Button';
 import ErrorCard from './components/ErrorCard/ErrorCard';
@@ -8,6 +8,7 @@ import ErrorCard from './components/ErrorCard/ErrorCard';
 export default function App() {
   const [checks, setChecks] = useState([]);
   const [fetchSuccess, setFetchSuccess] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(null);
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const getChecks = useCallback(async () => {
@@ -28,6 +29,17 @@ export default function App() {
   useEffect(() => {
     setSubmitDisabled(!(checks.every(check => check.resolution === true) || checks.some(check => check.resolution === false)));
   }, [checks]);
+
+  const onSubmit = async () => {
+    const checkValues = checks.reduce((accumulator, check) => {
+      accumulator.push({checkId: check.id, result: check.resolution ? 'yes' : 'no'});
+      return accumulator;
+    }, []);
+
+    await submitCheckResults(checkValues)
+      .then(() => setSubmitSuccess(true))
+      .catch(() => setSubmitSuccess(false))
+  };
 
   const sortChecksByPriority = checks => {
     return [...checks].sort((a, b) => b.priority - a.priority);
@@ -87,10 +99,12 @@ export default function App() {
       {fetchSuccess && (<>
           <CheckList checks={checks} clickHandler={clickHandler}/>
           <section className="submit-container">
-            <Button children={'Submit'} disabled={submitDisabled}/>
+            <Button children={'Submit'} disabled={submitDisabled} type='submit' onClick={onSubmit}/>
           </section>
         </>
       )}
+      {submitSuccess && <div>Submission was successful!</div>}
+      {submitSuccess === false && <ErrorCard error={'An error occurred'} buttonText={'Submit again'} clickHandler={onSubmit}/>}
     </div>
   );
 }

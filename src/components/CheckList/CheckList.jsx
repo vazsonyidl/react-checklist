@@ -3,17 +3,17 @@ import React from 'react';
 import CheckListElement from '../CheckListElement/CheckListElement';
 
 const CheckList = ({ checks, clickHandler }) => {
-  const elements = [];
-  const setRef = (ref) => elements.push(ref);
+  const elementRefs = [];
+  const setRef = ref => elementRefs.push(ref);
 
-  const onArrowDown = (id) => {
-    const idx = checks.findIndex((check) => check.id === id);
-    elements[idx >= elements.length - 1 ? idx : idx + 1].focus();
+  const onArrowDown = id => {
+    const prevFocusedIndex = checks.findIndex((check) => check.id === id);
+    elementRefs[prevFocusedIndex >= elementRefs.length - 1 ? prevFocusedIndex : prevFocusedIndex + 1].focus();
   };
 
-  const onArrowUp = (id) => {
-    const idx = checks.findIndex((check) => check.id === id);
-    elements[idx >= 1 ? idx - 1 : 0].focus();
+  const onArrowUp = id => {
+    const prevFocusedIndex = checks.findIndex((check) => check.id === id);
+    elementRefs[prevFocusedIndex >= 1 ? prevFocusedIndex - 1 : 0].focus();
   };
 
   return (

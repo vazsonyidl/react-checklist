@@ -7,7 +7,6 @@
   text-transform: uppercase;
   text-align: center;
   user-select: none;
-  border: 2px solid var(--primary-color);
   background-color: var(--primary-color);
   color: white;
 
@@ -33,6 +32,10 @@
   padding: 0 16px;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.deselected:enabled {
+  color: var(--primary-color);
 }
 
 :enabled {

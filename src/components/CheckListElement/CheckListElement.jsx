@@ -20,10 +20,10 @@ const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp})
         onSubmission(false);
         break;
       case 'ArrowDown':
-        onArrowDown(check.id);
+        onArrowDown(check?.id);
         break;
       case 'ArrowUp':
-        onArrowUp(check.id);
+        onArrowUp(check?.id);
         break;
       default:
         break;
@@ -40,14 +40,14 @@ const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp})
     >
       <span data-testid="check-description">{check.description}</span>
       <section className="button-container">
-        <Button children={'Yes'}
-                onClick={() => onSubmission(true)}
+        <Button children='Yes'
+                onClick={onSubmission.bind(this, true)}
                 disabled={check.disabled}
                 type="button"
                 className={check.resolution === true ? 'selected' : 'deselected'}
                 data-testid='check-yes-btn'/>
-        <Button children={'No'}
-                onClick={() => onSubmission(false)}
+        <Button children='No'
+                onClick={onSubmission.bind(this, false)}
                 disabled={check.disabled}
                 type="button"
                 className={check.resolution === false ? 'selected' : 'deselected'}
@@ -59,7 +59,7 @@ const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp})
 
 CheckListElement.propTypes = {
   check: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
     priority: PropTypes.number,
     description: PropTypes.string,
     resolution: PropTypes.bool,
@@ -67,4 +67,5 @@ CheckListElement.propTypes = {
   }).isRequired,
   setRef: PropTypes.func.isRequired
 };
+
 export default CheckListElement;

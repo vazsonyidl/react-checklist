@@ -1,4 +1,5 @@
 import React from 'react';
+
 import CheckListElement from '../CheckListElement/CheckListElement';
 
 const CheckList = ({ checks, clickHandler }) => {

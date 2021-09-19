@@ -17,7 +17,7 @@ const CheckList = ({ checks, clickHandler }) => {
   };
 
   return (
-    <div>
+    <>
       {
         checks
           .map((check) => (
@@ -31,7 +31,7 @@ const CheckList = ({ checks, clickHandler }) => {
             />
           ))
       }
-    </div>
+    </>
   );
 };
 

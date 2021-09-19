@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '../Button/Button';
 import './CheckListElement.css';
 
 const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp}) => {
@@ -39,21 +38,21 @@ const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp})
       ref={element => setRef(element)}
     >
       <span data-testid="check-description">{check.description}</span>
-      <section className="button-container">
-        <Button onClick={onSubmission.bind(this, true)}
-                disabled={check.disabled}
-                type="button"
-                className={check.resolution === true ? 'selected' : 'deselected'}
-                data-testid="check-yes-btn">
-          Yes
-        </Button>
-        <Button onClick={onSubmission.bind(this, false)}
-                disabled={check.disabled}
-                type="button"
-                className={check.resolution === false ? 'selected' : 'deselected'}
-                data-testid="check-no-btn">
-          No
-        </Button>
+      <section className="radio-container" role="article">
+        <input type="radio"
+               id="radio-yes"
+               value="true"
+               checked={check.resolution === true}
+               readOnly
+               data-testid="check-yes-btn"/>
+        <label htmlFor="radio-yes" onClick={onSubmission.bind(this, true)}>Yes</label>
+        <input type="radio"
+               id="radio-no"
+               value="no"
+               checked={check.resolution === false}
+               readOnly
+               data-testid="check-no-btn"/>
+        <label htmlFor="radio-no" onClick={onSubmission.bind(this, false)}>No</label>
       </section>
     </div>
   );

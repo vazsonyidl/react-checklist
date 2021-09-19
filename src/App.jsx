@@ -93,7 +93,7 @@ export default function App() {
   };
 
   return (
-    <div className="App">
+    <section className="App" role="article">
       {fetchSuccess === false && (
         <ErrorCard error={'An error occurred'} buttonText={'Try again'} clickHandler={getChecks}/>
       )}
@@ -106,6 +106,6 @@ export default function App() {
       )}
       {submitSuccess && <div>Submission was successful!</div>}
       {submitSuccess === false && <ErrorCard error={'An error occurred'} buttonText={'Submit again'} clickHandler={onSubmit}/>}
-    </div>
+    </section>
   );
 }

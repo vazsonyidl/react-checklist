@@ -2,14 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './CheckListElement.scss';
+import {ICheck} from '../../App';
 
-const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp}) => {
-  const onSubmission = resolution => {
+interface ICheckListElementProps {
+  check: ICheck;
+  clickHandler: Function;
+  setRef: Function;
+  onArrowDown: Function;
+  onArrowUp: Function;
+}
+
+const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp}: ICheckListElementProps) => {
+  const onSubmission = (resolution: boolean) => {
     if (check?.disabled) return;
     clickHandler(check.id, resolution);
   };
 
-  const handleKeyDown = event => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     event.stopPropagation();
     switch (event?.key) {
       case '1':
@@ -34,7 +43,7 @@ const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp})
       className={`container ${check.disabled ? 'disabled' : ''}`}
       aria-disabled={check.disabled}
       onKeyDown={handleKeyDown}
-      tabIndex="0"
+      tabIndex={0}
       ref={element => setRef(element)}
     >
       <span data-testid="check-description">{check.description}</span>
@@ -44,13 +53,13 @@ const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp})
                value="true"
                checked={check.resolution === true}
                readOnly/>
-        <label htmlFor="radio-yes" onClick={onSubmission.bind(this, true)} data-testid="check-yes-label">Yes</label>
+        <label htmlFor="radio-yes" onClick={() => onSubmission(true)} data-testid="check-yes-label">Yes</label>
         <input type="radio"
                id="radio-no"
                value="no"
                checked={check.resolution === false}
                readOnly/>
-        <label htmlFor="radio-no" onClick={onSubmission.bind(this, false)} data-testid="check-no-label">No</label>
+        <label htmlFor="radio-no" onClick={() => onSubmission(false)} data-testid="check-no-label">No</label>
       </section>
     </div>
   );

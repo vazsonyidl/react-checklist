@@ -52,7 +52,7 @@ describe("Check list element", () => {
       );
     });
 
-    const yesBtn = container.querySelector('[data-testid="check-yes-btn"]');
+    const yesBtn = container.querySelector('[data-testid="check-yes-label"]');
     expect(yesBtn.textContent).toEqual("Yes");
     act(() => {
       yesBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
@@ -60,7 +60,7 @@ describe("Check list element", () => {
 
     expect(clickHandler).toHaveBeenCalledWith(dummyCheck.id, true);
 
-    const noBtn = container.querySelector('[data-testid="check-no-btn"]');
+    const noBtn = container.querySelector('[data-testid="check-no-label"]');
     expect(noBtn.textContent).toEqual("No");
     act(() => {
       noBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
@@ -83,7 +83,7 @@ describe("Check list element", () => {
       );
     });
 
-    const yesBtn = container.querySelector('[data-testid="check-yes-btn"]');
+    const yesBtn = container.querySelector('[data-testid="check-yes-label"]');
     expect(yesBtn.textContent).toEqual("Yes");
     act(() => {
       yesBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));

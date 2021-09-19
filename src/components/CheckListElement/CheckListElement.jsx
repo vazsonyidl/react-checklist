@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './CheckListElement.css';
+import './CheckListElement.scss';
 
 const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp}) => {
   const onSubmission = resolution => {
@@ -43,16 +43,14 @@ const CheckListElement = ({check, clickHandler, setRef, onArrowDown, onArrowUp})
                id="radio-yes"
                value="true"
                checked={check.resolution === true}
-               readOnly
-               data-testid="check-yes-btn"/>
-        <label htmlFor="radio-yes" onClick={onSubmission.bind(this, true)}>Yes</label>
+               readOnly/>
+        <label htmlFor="radio-yes" onClick={onSubmission.bind(this, true)} data-testid="check-yes-label">Yes</label>
         <input type="radio"
                id="radio-no"
                value="no"
                checked={check.resolution === false}
-               readOnly
-               data-testid="check-no-btn"/>
-        <label htmlFor="radio-no" onClick={onSubmission.bind(this, false)}>No</label>
+               readOnly/>
+        <label htmlFor="radio-no" onClick={onSubmission.bind(this, false)} data-testid="check-no-label">No</label>
       </section>
     </div>
   );

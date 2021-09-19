@@ -4,7 +4,7 @@ import {fetchChecks, submitCheckResults} from './api';
 import CheckList from './components/CheckList/CheckList';
 import Button from './components/Button/Button';
 import ErrorCard from './components/ErrorCard/ErrorCard';
-import './styles.css';
+import './styles.scss';
 
 export default function App() {
   const [checks, setChecks] = useState([]);

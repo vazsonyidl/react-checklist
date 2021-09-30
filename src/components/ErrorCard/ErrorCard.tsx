@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 
 import Button from '../Button/Button';
 
-const ErrorCard = ({ error, buttonText, clickHandler }) => (
+interface IErrorCardProps {
+  error: string;
+  buttonText: string;
+  clickHandler: Function;
+}
+
+const ErrorCard = ({error, buttonText, clickHandler}: IErrorCardProps) => (
   <section>
     <div>{error}</div>
-    <Button children={buttonText} onClick={clickHandler} />
+    <Button children={buttonText} onClick={clickHandler}/>
   </section>
 );
 

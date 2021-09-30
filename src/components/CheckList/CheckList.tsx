@@ -1,23 +1,29 @@
 import React from 'react';
 
 import CheckListElement from '../CheckListElement/CheckListElement';
+import {ICheck} from '../../App';
 
-const CheckList = ({ checks, clickHandler }) => {
-  const elementRefs = [];
-  const setRef = ref => elementRefs.push(ref);
+interface ICheckListProps {
+  checks: Array<ICheck>;
+  clickHandler: Function;
+}
 
-  const onArrowDown = id => {
+const CheckList = ({checks, clickHandler}: ICheckListProps) => {
+  const elementRefs: Array<HTMLDivElement> = [];
+  const setRef = (ref: HTMLDivElement) => elementRefs.push(ref);
+
+  const onArrowDown = (id: string) => {
     const prevFocusedIndex = checks.findIndex((check) => check.id === id);
     elementRefs[prevFocusedIndex >= elementRefs.length - 1 ? prevFocusedIndex : prevFocusedIndex + 1].focus();
   };
 
-  const onArrowUp = id => {
+  const onArrowUp = (id: string) => {
     const prevFocusedIndex = checks.findIndex((check) => check.id === id);
     elementRefs[prevFocusedIndex >= 1 ? prevFocusedIndex - 1 : 0].focus();
   };
 
   return (
-    <div>
+    <>
       {
         checks
           .map((check) => (
@@ -31,7 +37,7 @@ const CheckList = ({ checks, clickHandler }) => {
             />
           ))
       }
-    </div>
+    </>
   );
 };
 

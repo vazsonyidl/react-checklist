@@ -1,0 +1,68 @@
+.container {
+  padding: 12px 8px;
+  outline: none;
+
+  &:focus {
+    background-color: #e4f5f7;
+  }
+
+  &:hover {
+    background-color: #e6ebf4;
+  }
+
+  .radio-container {
+    padding: 8px 0 0;
+
+    input[type="radio"] {
+      display: none;
+
+      &:checked + label {
+        background-color: var(--primary-color);
+        color: white;
+      }
+    }
+
+    label {
+      display: inline-block;
+      width: 48px;
+      text-align: center;
+      padding: 4px;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+    background-color: #e6ebf4;
+    color: #bdc0cf;
+
+    label {
+      border-color: #bdc0cf;
+      color: #bdc0cf;
+
+      &:nth-of-type(odd) {
+        border-right: 1px solid #bdc0cf;
+        border-radius: 4px 0 0 4px;
+      }
+
+      &:nth-of-type(even) {
+        border-left: 1px solid #bdc0cf;
+        border-radius: 0 4px 4px 0;
+      }
+    }
+  }
+
+  &:not(.disabled) {
+    label:nth-of-type(odd) {
+      border-right: 1px solid var(--primary-color);
+      border-radius: 4px 0 0 4px;
+    }
+
+    label:nth-of-type(even) {
+      border-left: 1px solid var(--primary-color);
+      border-radius: 0 4px 4px 0;
+    }
+  }
+}
